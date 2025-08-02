@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Websites and Mobile App Dev</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            /* New: Fixes the layout to prevent sideways movement */
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1a237e;
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Adjust main content padding to account for fixed header */
+        main {
+            padding-top: 150px;
+            padding: 30px 15px;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 1.2px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-btn.gmail {
+            background-color: #d44638;
+            color: white;
+        }
+
+        .header-btn.gmail:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .header-btn.whatsapp {
+            background-color: #25d366;
+            color: white;
+        }
+
+        .header-btn.whatsapp:hover {
+            background-color: #1da851;
+            transform: translateY(-2px);
+        }
+
+        .header-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Content Headings and Paragraphs */
+        h2 {
+            color: #1a237e;
+            border-bottom: 3px solid #3f51b5;
+            padding-bottom: 15px;
+            margin-top: 40px;
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h3 {
+            color: #3f51b5;
+            margin-top: 30px;
+            font-size: 1.8em;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Card Grids */
+        .systems-grid, .app-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .system-card, .app-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .system-card:hover, .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Card Image Styles */
+        .system-card img, .app-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .system-card-content, .app-card-content {
+            padding: 15px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .system-card h4, .app-card-content h4 {
+            color: #1a237e;
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .system-card p {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Download Button Styles */
+        .download-demo-btn {
+            display: block;
+            width: 80%;
+            margin: 0 auto 15px auto;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .download-demo-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Services Information Section */
+        .services-info {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px dashed #ccc;
+            text-align: center;
+        }
+
+        .services-info ul {
+            list-style-type: upper-roman;
+            text-align: left;
+            max-width: 800px;
+            margin: 20px auto;
+            padding-left: 20px;
+        }
+
+        .services-info li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .services-info li strong {
+            color: #1a237e;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 50px;
+            font-size: 0.9em;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #bbb;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px 25px;
+        }
+
+        .footer-links a {
+            color: #88aaff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            .header-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .header-btn {
+                width: 80%;
+                justify-content: center;
+            }
+            main {
+                padding-top: 160px;
+                padding: 20px 10px;
+                margin: 20px auto;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            h3 {
+                font-size: 1.5em;
+            }
+            .systems-grid, .app-list {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            .system-card img, .app-card img {
+                height: 160px;
+            }
+            .system-card h4, .app-card-content h4 {
+                font-size: 1.2em;
+            }
+            .system-card p {
+                font-size: 0.85em;
+            }
+            .download-demo-btn {
+                width: 90%;
+            }
+            .services-info ul {
+                padding-left: 15px;
+            }
+            .services-info li {
+                font-size: 1em;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            .header-btn {
+                width: 90%;
+            }
+            main {
+                padding-top: 150px;
+                padding: 15px 8px;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.3em;
+            }
+            .systems-grid, .app-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .system-card img, .app-card img {
+                height: 140px;
+            }
+            .system-card h4, .app-card-content h4 {
+                font-size: 1.1em;
+            }
+            .system-card p {
+                font-size: 0.8em;
+            }
+            .download-demo-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <header>
+        <h1>PM WEBSITES AND MOBILE APP DEV</h1>
+        <div class="header-buttons">
+            <a href="mailto:shadowkenya254@gmail.com" class="header-btn gmail">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Gmail
+            </a>
+            <a href="https://wa.me/254758361830" target="_blank" class="header-btn whatsapp">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M12.04 2c-5.45 0-9.91 4.46-9.91 9.91 0 1.75.5 3.42 1.46 4.88l-1.53 5.61 5.72-1.5c1.36.79 2.91 1.25 4.49 1.25 5.45 0 9.91-4.46 9.91-9.91s-4.46-9.91-9.91-9.91zm.04 18.01c-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31c-.82-1.28-1.27-2.77-1.27-4.36 0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.41s2.41 3.62 2.41 5.82c0 4.54-3.7 8.24-8.24 8.24zm4.52-6.16c-.25-.12-.8-.39-.92-.43-.12-.04-.26-.05-.37.04-.11.09-.42.43-.51.52-.1.09-.19.1-.35.04-.16-.06-.67-.25-1.28-.79-.47-.42-.79-.94-.89-1.11-.09-.17-.01-.26.08-.34.08-.08.19-.2.28-.3.09-.1.12-.17.18-.29.06-.12.03-.22-.01-.3-.05-.09-.37-.89-.51-1.22-.14-.33-.28-.28-.37-.28-.09 0-.19-.01-.29-.01-.19 0-.51.09-.78.37-.28.28-1.07 1.05-1.07 2.56 0 1.5.99 2.97 1.13 3.18.14.21 1.97 3.01 4.76 4.17 2.01.86 2.4 .8 2.8.75.39-.05.8-.32.92-.64.12-.31.12-.58.08-.64-.04-.06-.14-.1-.29-.17z"/>
+                </svg>
+                WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <p>Welcome to PM Websites and Mobile App Dev, your partner in creating powerful and intuitive digital solutions. We specialize in developing custom web applications, mobile apps, and comprehensive digital platforms tailored to meet unique business needs. Explore our portfolio of diverse systems designed for various industries.</p>
+
+        <h2 id="websites">Our Featured Website Systems </h2>
+        <p>Below is a selection of 20 innovative website systems we've developed or can develop, showcasing a range of functionalities and design approaches. Click "Download Demo" to get a brief overview or conceptual document for each system.</p>
+
+        <div class="systems-grid">
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/007bff/ffffff?text=E-commerce+Platform" alt="E-commerce Platform">
+                <div class="system-card-content">
+                    <h4>E-commerce Platform</h4>
+                    <p>A scalable online store solution with product management, secure payments, and order tracking.</p>
+                </div>
+                <a href="downloads/ecommerce_platform_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/28a745/ffffff?text=CRM+System" alt="CRM System">
+                <div class="system-card-content">
+                    <h4>Customer Relationship Management (CRM)</h4>
+                    <p>Manage customer interactions, sales pipelines, and support tickets efficiently.</p>
+                </div>
+                <a href="downloads/crm_system_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/ffc107/333333?text=Project+Mgmt+Tool" alt="Project Management Tool">
+                <div class="system-card-content">
+                    <h4>Project Management Tool</h4>
+                    <p>Collaborative platform for task assignment, progress tracking, and team communication.</p>
+                </div>
+                <a href="downloads/project_mgmt_tool_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/dc3545/ffffff?text=Hospital+Mgmt+System" alt="Hospital Management System">
+                <div class="system-card-content">
+                    <h4>Hospital Management System (HMS)</h4>
+                    <p>Comprehensive solution for patient records, appointments, billing, and inventory.</p>
+                </div>
+                <a href="downloads/hms_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/6f42c1/ffffff?text=School+Mgmt+System" alt="School Management System">
+                <div class="system-card-content">
+                    <h4>School Management System (SMS)</h4>
+                    <p>Streamline student enrollment, academic records, attendance, and communication.</p>
+                </div>
+                <a href="downloads/sms_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/20c997/ffffff?text=Inventory+Mgmt" alt="Inventory Management System">
+                <div class="system-card-content">
+                    <h4>Inventory Management System</h4>
+                    <p>Track stock levels, manage suppliers, and optimize warehouse operations.</p>
+                </div>
+                <a href="downloads/inventory_mgmt_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/fd7e14/ffffff?text=Booking+System" alt="Online Booking System">
+                <div class="system-card-content">
+                    <h4>Online Booking System</h4>
+                    <p>Facilitate appointments, reservations, and event bookings for various services.</p>
+                </div>
+                <a href="downloads/booking_system_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/6610f2/ffffff?text=HRM+System" alt="HRM System">
+                <div class="system-card-content">
+                    <h4>Human Resources Management (HRM)</h4>
+                    <p>Manage employee data, payroll, leave requests, and performance appraisals.</p>
+                </div>
+                <a href="downloads/hrm_system_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/e83e8c/ffffff?text=Real+Estate+Portal" alt="Real Estate Portal">
+                <div class="system-card-content">
+                    <h4>Real Estate Listing Portal</h4>
+                    <p>Platform for property listings, agent management, and client inquiries.</p>
+                </div>
+                <a href="downloads/real_estate_portal_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/ff6f00/ffffff?text=Learning+Mgmt+System" alt="Learning Management System">
+                <div class="system-card-content">
+                    <h4>Learning Management System (LMS)</h4>
+                    <p>Online platform for courses, student progress, assessments, and content delivery.</p>
+                </div>
+                <a href="downloads/lms_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/9C27B0/ffffff?text=Event+Mgmt+System" alt="Event Management System">
+                <div class="system-card-content">
+                    <h4>Event Management System</h4>
+                    <p>Plan, promote, and manage events with ticketing, registration, and attendee tracking.</p>
+                </div>
+                <a href="downloads/event_mgmt_system_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/FF5722/ffffff?text=Job+Portal" alt="Job Portal">
+                <div class="system-card-content">
+                    <h4>Online Job Portal</h4>
+                    <p>Connect job seekers with employers, featuring resume uploads and job alerts.</p>
+                </div>
+                <a href="downloads/job_portal_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/795548/ffffff?text=Restaurant+POS" alt="Restaurant POS System">
+                <div class="system-card-content">
+                    <h4>Restaurant POS System</h4>
+                    <p>Manage orders, tables, billing, and inventory for restaurants and cafes.</p>
+                </div>
+                <a href="downloads/restaurant_pos_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/607D8B/ffffff?text=Travel+Booking+Platform" alt="Travel Booking Platform">
+                <div class="system-card-content">
+                    <h4>Travel Booking Platform</h4>
+                    <p>Search and book flights, hotels, and vacation packages with secure payment.</p>
+                </div>
+                <a href="downloads/travel_booking_platform_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/CDDC39/333333?text=Fleet+Mgmt+System" alt="Fleet Management System">
+                <div class="system-card-content">
+                    <h4>Fleet Management System</h4>
+                    <p>Track vehicles, manage routes, fuel consumption, and maintenance schedules.</p>
+                </div>
+                <a href="downloads/fleet_mgmt_system_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/9E9E9E/ffffff?text=News+Portal" alt="News Portal">
+                <div class="system-card-content">
+                    <h4>News & Content Portal</h4>
+                    <p>Publish and manage articles, videos, and other content with user commenting and sharing.</p>
+                </div>
+                <a href="downloads/news_portal_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/4CAF50/ffffff?text=Donation+Platform" alt="Online Donation Platform">
+                <div class="system-card-content">
+                    <h4>Online Donation Platform</h4>
+                    <p>Raise funds for causes with secure payment processing and campaign management tools.</p>
+                </div>
+                <a href="downloads/donation_platform_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/FFC107/333333?text=Social+Network" alt="Social Networking Platform">
+                <div class="system-card-content">
+                    <h4>Social Networking Platform</h4>
+                    <p>A custom social media network with user profiles, feeds, and group functionality.</p>
+                </div>
+                <a href="downloads/social_network_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/00BCD4/ffffff?text=Library+Mgmt+System" alt="Library Management System">
+                <div class="system-card-content">
+                    <h4>Library Management System</h4>
+                    <p>Digital solution for cataloging books, tracking check-outs, and managing patrons.</p>
+                </div>
+                <a href="downloads/library_mgmt_system_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+            <div class="system-card">
+                <img src="https://placehold.co/300x200/E91E63/ffffff?text=Patient+Portal" alt="Patient Portal">
+                <div class="system-card-content">
+                    <h4>Patient Portal & EHR</h4>
+                    <p>Secure portal for patients to view records, schedule appointments, and communicate with doctors.</p>
+                </div>
+                <a href="downloads/patient_portal_demo.pdf" download class="download-demo-btn">Download Demo</a>
+            </div>
+        </div>
+
+        ---
+
+        <h2 id="mobileapps">PM Mobile Apps Dev</h2>
+        <p>In addition to websites, we specialize in building powerful mobile applications for both Android and iOS platforms. Here are 16 of our mobile app concepts:</p>
+
+        <div class="app-list">
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/007bff/ffffff?text=On-Demand+Service" alt="On-Demand Service App">
+                <div class="app-card-content">
+                    <h4>On-Demand Service App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/28a745/ffffff?text=Food+Delivery" alt="Food Delivery App">
+                <div class="app-card-content">
+                    <h4>Food Delivery App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/ffc107/333333?text=Ride-Sharing" alt="Ride-Sharing App">
+                <div class="app-card-content">
+                    <h4>Ride-Sharing App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/dc3545/ffffff?text=Fitness+Tracker" alt="Fitness & Health Tracker">
+                <div class="app-card-content">
+                    <h4>Fitness & Health Tracker</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/6f42c1/ffffff?text=E-Wallet" alt="E-Wallet & Mobile Payments">
+                <div class="app-card-content">
+                    <h4>E-Wallet & Mobile Payments</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/20c997/ffffff?text=Social+Media" alt="Social Media App">
+                <div class="app-card-content">
+                    <h4>Social Media App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/fd7e14/ffffff?text=Educational+App" alt="Educational App">
+                <div class="app-card-content">
+                    <h4>Educational App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/6610f2/ffffff?text=Augmented+Reality" alt="Augmented Reality App">
+                <div class="app-card-content">
+                    <h4>Augmented Reality App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/e83e8c/ffffff?text=E-commerce+App" alt="E-commerce App">
+                <div class="app-card-content">
+                    <h4>E-commerce App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/ff6f00/ffffff?text=Smart+Home+IoT" alt="IoT-based Smart Home App">
+                <div class="app-card-content">
+                    <h4>IoT-based Smart Home App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/9C27B0/ffffff?text=Dating+App" alt="Dating App">
+                <div class="app-card-content">
+                    <h4>Dating App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/FF5722/ffffff?text=Gaming+App" alt="Gaming App">
+                <div class="app-card-content">
+                    <h4>Gaming App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/795548/ffffff?text=Inventory+Mgmt" alt="Inventory Management App">
+                <div class="app-card-content">
+                    <h4>Inventory Management App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/607D8B/ffffff?text=Booking+and+Scheduling" alt="Booking & Scheduling App">
+                <div class="app-card-content">
+                    <h4>Booking & Scheduling App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/CDDC39/333333?text=News+and+Media" alt="News & Media App">
+                <div class="app-card-content">
+                    <h4>News & Media App</h4>
+                </div>
+            </div>
+            <div class="app-card">
+                <img src="https://placehold.co/300x180/9E9E9E/ffffff?text=Health+Care+Telemedicine" alt="Health Care Telemedicine App">
+                <div class="app-card-content">
+                    <h4>Health Care Telemedicine App</h4>
+                </div>
+            </div>
+        </div>
+
+        ---
+
+        <div class="services-info" id="services">
+            <h2>Our Services are:</h2>
+            <ul>
+                <li><strong>Custom Website Development:</strong> Tailored solutions from scratch to fit your specific business logic and goals.</li>
+                <li><strong>Mobile Application Development:</strong> Creating native and cross-platform apps for iOS and Android.</li>
+                <li><strong>E-commerce Solutions:</strong> Building robust online stores with secure payment gateways and advanced features.</li>
+                <li><strong>Database Management:</strong> Designing and maintaining efficient and secure database systems.</li>
+                <li><strong>UI/UX Design:</strong> Crafting intuitive and engaging user interfaces for a superior user experience.</li>
+                <li><strong>API Development & Integration:</strong> Connecting different systems to work together seamlessly.</li>
+                <li><strong>Cloud Services:</strong> Deployment and management of your applications on platforms like AWS and Google Cloud.</li>
+                <li><strong>Website & App Maintenance:</strong> Providing ongoing support, security updates, and performance optimization.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 PM Websites and Mobile App Dev. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#top">Back to Top</a>
+            <a href="#websites">Websites</a>
+            <a href="#mobileapps">Mobile Apps</a>
+            <a href="#services">Services</a>
+        </div>
+    </footer>
+</body>
+</html>
